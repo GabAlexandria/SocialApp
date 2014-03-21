@@ -1,0 +1,3 @@
+development:
+  app_id: "Your fb id here"
+  secret: "Your fb secret here"
