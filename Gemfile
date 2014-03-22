@@ -8,6 +8,10 @@ gem 'pg'
 gem 'koala'
 gem 'devise'
 gem 'omniauth-facebook'
+gem 'foreman'
+gem 'delayed_job'
+gem 'delayed_job_active_record'
+gem 'daemons'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

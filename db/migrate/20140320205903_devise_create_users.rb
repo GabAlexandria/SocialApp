@@ -6,7 +6,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :username
       t.string :uid
       t.string :token
-      t.integer :expires_at
+      t.string :location
+      t.string :website
+      t.datetime :expires_at
       ## Database authenticatable
       t.string :email,              :null => false, :default => ""
       t.string :encrypted_password, :null => false, :default => ""

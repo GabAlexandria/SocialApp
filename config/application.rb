@@ -6,6 +6,10 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
+FACEBOOK_CONFIG = YAML.load(File.read("config/facebook.yml"))
+FACEBOOK_CONFIG.merge! FACEBOOK_CONFIG.fetch(Rails.env, {})
+FACEBOOK_CONFIG.symbolize_keys!
+
 module SocialApp
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

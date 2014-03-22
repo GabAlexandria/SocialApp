@@ -1,0 +1,11 @@
+<div class="login-box">
+  <h3>Press it. I dare you.</h3>
+  <!--<div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div>-->
+  <%= link_to "Log in with Facebook", user_omniauth_authorize_path(:facebook) %>
+</div>
+
+<% if current_user.present? %>
+  <%= link_to "Sign out", destroy_user_session_path, :method => :delete, :class => "category" %>
+  <%= link_to "Profile", user_path(current_user) %>
+<% end %>
+
