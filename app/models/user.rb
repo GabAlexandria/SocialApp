@@ -4,11 +4,15 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  serialize :interests
+  serialize :experience
+
   has_many :tags, as: :taggable
 
   def self.find_or_create_facebook_user(auth) 
 
     data = auth["extra"]["raw_info"]
+     
     user = User.where(:email => data["email"]).first_or_initialize
 
     oauth = Koala::Facebook::OAuth.new(FACEBOOK_CONFIG[:app_id], FACEBOOK_CONFIG[:secret])
@@ -23,6 +27,7 @@ class User < ActiveRecord::Base
       user.password = Devise.friendly_token[0,20]
     end
     user.name = auth.info.name
+    user.experience = data.work
 
     user.save!
     user
@@ -30,11 +35,8 @@ class User < ActiveRecord::Base
 
   def get_location_from_facebook
     graph = Koala::Facebook::GraphAPI.new(self.token)
-    loc =  graph.get_object(self.uid)["location"]["name"]
-    logger.debug ["WWWWWWWWWWWWWWWWW"] << loc
-    #if loc.present?
-    #  user.update_attribute(:locations, loc)
-    #end
+    loc =  graph.get_object(self.uid)["location"]
+    self.update_attribute(:location, loc["name"]) if loc.present?
   end
 
   def get_likes_from_facebook
@@ -42,7 +44,6 @@ class User < ActiveRecord::Base
     likes = graph.get_connections(self.uid, "likes")
     friends = graph.get_connections(self.uid, "friends")
 
-    logger.debug ["XXXXXXXXXXXX"] << likes
-    logger.debug ["YYYYYYYYYYYY"] << friends
+    self.update_attribute(:interests, likes) if likes.present? 
   end
 end

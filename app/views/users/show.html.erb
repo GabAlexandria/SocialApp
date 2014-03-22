@@ -1,7 +1,22 @@
 <%= @user.name %>
 
-<ul>
-  <% @user.tags.each do |tag| %>
-    <li><%= tag.name %></li>
-  <% end %>
-</ul>
+<% if @user.experience %>
+  <ul>
+    <% @user.experience.each do |xp| %>
+      <li><%= xp.employer["name"] %> - <%= xp.position["name"] if xp.position %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if @user.interests %>
+  <ul>
+    <% @user.interests.each do |interest| %>
+      <li><%= interest["name"] %></li>
+      <ul>
+        <li>Category list: <%= interest["category_list"].map {|item| item["name"]}.join(", ") if interest["category_list"] %></li>
+        <li>Category: <%= interest["category"] %></li>
+        <li>Page ID: <%= interest["id"] %></li>
+      </ul>
+    <% end %>
+  </ul>
+<% end %>

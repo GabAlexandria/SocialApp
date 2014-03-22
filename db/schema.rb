@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(version: 20140322064011) do
     t.string   "location"
     t.string   "website"
     t.datetime "expires_at"
+    t.text     "experience"
+    t.text     "interests"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
